@@ -5,10 +5,11 @@ vars:
   BUILD_TYPE: Release
 
 tasks:
-  default:
-    desc: Alle verfügbaren Tasks anzeigen
+  samples:download:
+    desc: Downloads gltf sample models from github.
     cmds:
-      - task --list
+      - cd build
+      - git clone https://github.com/KhronosGroup/glTF-Sample-Models.git
 
   conan:profile:
     desc: Conan-Profil erkennen oder aktualisieren
@@ -31,11 +32,10 @@ tasks:
 
   cmake:build:
     desc: Projekt mit CMake bauen
-   # deps: [cmake:configure]
+    deps: [cmake:configure]
     cmds:
       - cmake --build {{.BUILD_DIR}}
-
   run:
     desc: Run the built executable
     cmds:
-      - ./build/MyGltfViewer "/home/bastian/Desktop/glTF-Sample-Models/2.0/Sponza/glTF/Sponza.gltf"
+      - ./build/MyGltfViewer "build/glTF-Sample-Models/2.0/Sponza/glTF/Sponza.gltf"

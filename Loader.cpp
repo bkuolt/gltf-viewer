@@ -8,6 +8,9 @@
 #include <tiny_gltf.h>
 
 #include <iostream>
+#include <filesystem>
+
+namespace {
 
 // Stub für ImageLoader Callback
 bool CustomImageLoader(tinygltf::Image *image, const int image_idx,
@@ -21,12 +24,14 @@ bool CustomImageLoader(tinygltf::Image *image, const int image_idx,
     return true;
 }
 
+void Process(tinygltf::Model model);
+
+}
+
 void LoadModel(const std::filesystem::path &path)
 {
     static tinygltf::TinyGLTF loader;
     loader.SetImageLoader(CustomImageLoader, nullptr); // Set custom image loader
-
-    /////////////
 
     tinygltf::Model model;
     std::string err, warn;
@@ -47,11 +52,18 @@ void LoadModel(const std::filesystem::path &path)
     Process(std::move(model));
 }
 
-///////
-
+namespace {
 
 void Process( tinygltf::Model model) {
 
-    model.
+    std::cout << "Number of meshes: " << model.meshes.size() << std::endl
+              << "Number of materials: " << model.materials.size() << std::endl
+              << "Number of nodes: " << model.nodes.size() << std::endl
+              << "Number of animations: " << model.animations.size() << std::endl;                                   
+
+    model.extensionsUsed.clear();
+    model.extensionsRequired.clear();
+    //model.asset.extensions = nlohmann::json::object();
+}
 
 }

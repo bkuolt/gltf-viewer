@@ -1,14 +1,13 @@
-#include <glm/glm.hpp>
+#include "Loader.hpp"
 #include <iostream>
-#include <filesystem>
-
-
-void LoadModel(const std::filesystem::path& path);
 
 int main(int argc, char** argv) {
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <path_to_gltf_file>" << std::endl;
+        return EXIT_FAILURE;
+    }
 
     const auto path = argv[1];
     LoadModel(path);
-
-    return 0;
+    return EXIT_SUCCESS;
 }
