@@ -10,14 +10,14 @@ list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}")
 find_package(glm REQUIRED)
 # find_package(tinygltf REQUIRED)
 
-add_executable(gltf_viewer main.cpp)
+add_executable(gltf_viewer src/main.cpp)
 target_compile_features(gltf_viewer PRIVATE cxx_std_17)
 
 #-------------------------------------
 # define libgltf
 #-------------------------------------
 add_library(libgltf STATIC
-    Loader.cpp
+    src/loader/Loader.cpp
 )
 
 find_package(nlohmann_json REQUIRED)

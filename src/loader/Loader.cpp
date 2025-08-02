@@ -1,14 +1,20 @@
+//--------------------------
+// tinygltf config
 #define TINYGLTF_IMPLEMENTATION
 #define TINYGLTF_NO_STB_IMAGE_WRITE
 #define TINYGLTF_NO_STB_IMAGE
 #define TINYGLTF_NO_INCLUDE_JSON
 #define TINYGLTF_USE_CPP14
+// TODO: move in cmake 
 
 #include <nlohmann/json.hpp>
 #include <tiny_gltf.h>
+//--------------------------
 
 #include <iostream>
 #include <filesystem>
+#include <glm/glm.hpp>
+#include <iostream>
 
 namespace {
 
@@ -27,6 +33,8 @@ bool CustomImageLoader(tinygltf::Image *image, const int image_idx,
 void Process(tinygltf::Model model);
 
 }
+
+namespace bgl::gltf {
 
 void LoadModel(const std::filesystem::path &path)
 {
@@ -50,7 +58,9 @@ void LoadModel(const std::filesystem::path &path)
     std::cout << "Loaded glTF file successfully!" << std::endl;
     // return model;
     Process(std::move(model));
+
 }
+}  // namespace bgl::gltf
 
 namespace {
 
@@ -65,5 +75,7 @@ void Process( tinygltf::Model model) {
     model.extensionsRequired.clear();
     //model.asset.extensions = nlohmann::json::object();
 }
+
+// TODO: print stats
 
 }

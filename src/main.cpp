@@ -1,4 +1,4 @@
-#include "Loader.hpp"
+#include "loader/Loader.hpp"
 #include <iostream>
 
 int main(int argc, char** argv) {
@@ -8,6 +8,6 @@ int main(int argc, char** argv) {
     }
 
     const auto path = argv[1];
-    LoadModel(path);
+    bgl::gltf::LoadModel(path);
     return EXIT_SUCCESS;
 }
