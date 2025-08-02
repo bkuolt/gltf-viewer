@@ -1,6 +1,7 @@
 [requires]
 glm/1.0.1
 tinygltf/2.9.0
+nlohmann_json/*
 
 #sdl/3.2.18
 #sdl_image/2.8.2
