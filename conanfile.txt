@@ -1,12 +1,13 @@
 [requires]
 glm/1.0.1
 tinygltf/2.9.0
-#nlohmann_json/*
 
-#sdl/3.2.18
-#sdl_image/2.8.2
-#sdl_mixer/2.8.0
-#sdl_ttf/2.24.0
+libjpeg/9e
+libpng/1.6.40
+
+zlib/1.2.13
+zstd/1.5.2
+# TODO: resolve nlohmann_json/*
 
 [generators]
 CMakeDeps

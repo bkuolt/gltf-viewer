@@ -29,6 +29,10 @@ target_include_directories(libgltf PRIVATE
 
 target_link_libraries(libgltf PRIVATE
     nlohmann_json::nlohmann_json
+    #libpng::libpng
+    #libjpeg::libjpeg
+    #zlib::zlib
+    #zstd::zstd
 )
 
 ##-------------------------------------

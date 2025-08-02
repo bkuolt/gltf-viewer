@@ -35,6 +35,12 @@ tasks:
     deps: [cmake:configure]
     cmds:
       - cmake --build {{.BUILD_DIR}}
+
+  cmake:clean:
+    desc: CMake-Build-Verzeichnis bereinigen
+    cmds:
+      - rm -rf {{.BUILD_DIR}}
+      
   run:
     desc: Run the built executable
     cmds:
