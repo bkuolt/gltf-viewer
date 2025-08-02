@@ -7,6 +7,8 @@ vars:
 tasks:
   samples:download:
     desc: Downloads gltf sample models from github.
+    status:
+      - test -d glTF-Sample-Models
     cmds:
       - cd build
       - git clone https://github.com/KhronosGroup/glTF-Sample-Models.git
@@ -18,17 +20,30 @@ tasks:
     status:
       - test -f ~/.conan2/profiles/{{.PROFILE}}
 
+  vulkan:install:
+    desc: Vulkan SDK installieren
+    cmds:
+      - sudo apt update
+        libx11-dev libx11-xcb-dev libfontenc-de
+      - sudo apt install -y \v libice-dev libsm-dev libxau-dev libxaw7-dev \
+        libxcomposite-dev libxdamage-dev libxkbfile-dev libxmu-dev libxmuu-dev libxpm-dev libxres-dev \
+        libxtst-dev libxcb-glx0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-xkb-dev \
+        libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev libxcb-shape0-dev \
+        libxcb-sync-dev libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-dri3-dev libxcb-cursor-dev libxcb-dri2-0-dev
+
   conan:install:
     desc: Conan-Abhängigkeiten installieren
     deps: [conan:profile]
     cmds:
-      - conan install . --output-folder=. --build=missing
+      - conan install . --output-folder=. --build=missing #-c tools.system.package_manager:mode=disable
 
   cmake:configure:
     desc: Projekt mit CMake konfigurieren
     deps: [conan:install]
     cmds:
       - cmake -S . -B {{.BUILD_DIR}} -DCMAKE_TOOLCHAIN_FILE={{.BUILD_DIR}}/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE={{.BUILD_TYPE}}
+
+  # Install Conan: pipx install conan; pipx ensurepath; source ~/.bashrc
 
   cmake:build:
     desc: Projekt mit CMake bauen
@@ -43,5 +58,6 @@ tasks:
 
   run:
     desc: Run the built executable
+    deps: [samples:download, cmake:build]
     cmds:
-      - ./build/gltf_viewer "build/glTF-Sample-Models/2.0/Sponza/glTF/Sponza.gltf"
+      - ./build/gltf_viewer "glTF-Sample-Models/2.0/Sponza/glTF/Sponza.gltf"

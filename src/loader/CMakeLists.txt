@@ -1,6 +1,13 @@
 add_library(libgltf STATIC
     Loader.cpp
+    Model.cpp
 )
+
+find_package(Vulkan REQUIRED)
+
+# Vulkan Libs und Include hinzufügen
+target_include_directories(libgltf PRIVATE ${Vulkan_INCLUDE_DIRS})
+target_link_libraries(libgltf PRIVATE ${Vulkan_LIBRARIES})
 
 find_package(nlohmann_json REQUIRED)
 target_include_directories(libgltf PRIVATE
