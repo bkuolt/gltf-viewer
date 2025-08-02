@@ -9,6 +9,7 @@ list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}")
 
 add_executable(MyGltfViewer
 main.cpp
+Loader.cpp
 )
 find_package(glm REQUIRED)
 

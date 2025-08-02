@@ -38,4 +38,4 @@ tasks:
   run:
     desc: Run the built executable
     cmds:
-      - ./build/MyGltfViewer
+      - ./build/MyGltfViewer "/home/bastian/Desktop/glTF-Sample-Models/2.0/Sponza/glTF/Sponza.gltf"
