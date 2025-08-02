@@ -40,8 +40,8 @@ tasks:
     desc: CMake-Build-Verzeichnis bereinigen
     cmds:
       - rm -rf {{.BUILD_DIR}}
-      
+
   run:
     desc: Run the built executable
     cmds:
-      - ./build/MyGltfViewer "build/glTF-Sample-Models/2.0/Sponza/glTF/Sponza.gltf"
+      - ./build/gltf_viewer "build/glTF-Sample-Models/2.0/Sponza/glTF/Sponza.gltf"

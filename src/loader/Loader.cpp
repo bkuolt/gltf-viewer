@@ -48,7 +48,9 @@ void printStats(const gltf::Model &model) {
 void Process(const gltf::Model& model) {
     printStats(model);
 
-    // TODO
+    // TODO:
+    // TODO:
+    // TODO:
 }
 // ---------------------------
 
