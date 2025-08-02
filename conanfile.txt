@@ -1,0 +1,17 @@
+[requires]
+glm/1.0.1
+tinygltf/2.9.0
+
+#sdl/3.2.18
+#sdl_image/2.8.2
+#sdl_mixer/2.8.0
+#sdl_ttf/2.24.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout
+
+

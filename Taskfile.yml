@@ -1,0 +1,41 @@
+version: '3'
+vars:
+  BUILD_DIR: build
+  PROFILE: default
+  BUILD_TYPE: Release
+
+tasks:
+  default:
+    desc: Alle verfügbaren Tasks anzeigen
+    cmds:
+      - task --list
+
+  conan:profile:
+    desc: Conan-Profil erkennen oder aktualisieren
+    cmds:
+      - conan profile detect --force
+    status:
+      - test -f ~/.conan2/profiles/{{.PROFILE}}
+
+  conan:install:
+    desc: Conan-Abhängigkeiten installieren
+    deps: [conan:profile]
+    cmds:
+      - conan install . --output-folder=. --build=missing
+
+  cmake:configure:
+    desc: Projekt mit CMake konfigurieren
+    deps: [conan:install]
+    cmds:
+      - cmake -S . -B {{.BUILD_DIR}} -DCMAKE_TOOLCHAIN_FILE={{.BUILD_DIR}}/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE={{.BUILD_TYPE}}
+
+  cmake:build:
+    desc: Projekt mit CMake bauen
+   # deps: [cmake:configure]
+    cmds:
+      - cmake --build {{.BUILD_DIR}}
+
+  run:
+    desc: Run the built executable
+    cmds:
+      - ./build/MyGltfViewer
