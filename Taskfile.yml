@@ -35,13 +35,13 @@ tasks:
     desc: Conan-Abhängigkeiten installieren
     deps: [conan:profile]
     cmds:
-      - conan install . --output-folder=. --build=missing #-c tools.system.package_manager:mode=disable
+      - conan install . --output-folder={{.BUILD_DIR}}/conan/ --build=missing -c tools.system.package_manager:mode=disable
 
   cmake:configure:
     desc: Projekt mit CMake konfigurieren
     deps: [conan:install]
     cmds:
-      - cmake -S . -B {{.BUILD_DIR}} -DCMAKE_TOOLCHAIN_FILE={{.BUILD_DIR}}/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE={{.BUILD_TYPE}}
+      - cmake -S . -B {{.BUILD_DIR}} -DCMAKE_TOOLCHAIN_FILE={{.BUILD_DIR}}/conan/build/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE={{.BUILD_TYPE}}
 
   # Install Conan: pipx install conan; pipx ensurepath; source ~/.bashrc
 

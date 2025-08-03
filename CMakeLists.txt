@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.21)
 project(gltf_viewer LANGUAGES CXX)
 
-include(${CMAKE_BINARY_DIR}/Release/generators/conan_toolchain.cmake)
-include(${CMAKE_BINARY_DIR}/Release/generators/conandeps_legacy.cmake)
+include(build/conan/build/Release/generators/conan_toolchain.cmake)
+include(build/conan/build/Release/generators/conandeps_legacy.cmake)
 
 set(CMAKE_BUILD_TYPE Release)
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}")
