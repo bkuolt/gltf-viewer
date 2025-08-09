@@ -1,9 +1,13 @@
 add_library(libgltf STATIC
     Loader.cpp
-    Model.cpp
+    vk/Model.cpp
+    vk/Pipeline.hpp
+    vk/Shader.hpp
+    vk/Device.hpp
 )
 
 find_package(Vulkan REQUIRED)
+find_package(glslang REQUIRED)
 
 # Vulkan Libs und Include hinzufügen
 target_include_directories(libgltf PRIVATE ${Vulkan_INCLUDE_DIRS})
@@ -18,6 +22,7 @@ target_include_directories(libgltf PRIVATE
 
 target_link_libraries(libgltf PRIVATE
     nlohmann_json::nlohmann_json
+    glslang::glslang glslang::SPIRV
     #libpng::libpng
     #libjpeg::libjpeg
     #zlib::zlib
