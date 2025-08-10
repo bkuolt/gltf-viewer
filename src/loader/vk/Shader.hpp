@@ -34,23 +34,6 @@ vk::ShaderModule  CreateShaderModule(
     return CreateShaderModule(device, code);
 }
 
-std::array<vk::PipelineShaderStageCreateInfo, 2> CreatePipelineShaderStageCreateInfo(
-    vk::ShaderModule vertShaderModule,
-    vk::ShaderModule fragShaderModule)
-{
-    vk::PipelineShaderStageCreateInfo vertShaderStageInfo{};
-    vertShaderStageInfo.stage  = vk::ShaderStageFlagBits::eVertex;
-    vertShaderStageInfo.module = vertShaderModule; // dein Vertex-Shader-Module
-    vertShaderStageInfo.pName  = "main"; // Entry Point im Shader
-
-    vk::PipelineShaderStageCreateInfo fragShaderStageInfo{};
-    fragShaderStageInfo.stage  = vk::ShaderStageFlagBits::eFragment;
-    fragShaderStageInfo.module = fragShaderModule; // dein Fragment-Shader-Module
-    fragShaderStageInfo.pName  = "main";
-
-    // Später in der Pipeline-Erstellung:
-    return { vertShaderStageInfo, fragShaderStageInfo };
-}
 
 std::vector<uint32_t> compileGLSLtoSPIRV(const std::string& source, EShLanguage stage) {
     glslang::InitializeProcess();
@@ -79,4 +62,17 @@ std::vector<uint32_t> compileGLSLtoSPIRV(const std::string& source, EShLanguage 
 
     glslang::FinalizeProcess();
     return spirv;
+}
+
+
+VkDescriptorSet createDescriptorSet() {
+    return {};  // TODO
+}
+
+
+// TODO: VkDescriptorSetLayout
+// TODO: 
+
+VkPipelineLayout createPipelineLayout() {
+    return {};  // TODO
 }

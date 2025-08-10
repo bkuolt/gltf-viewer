@@ -1,8 +1,8 @@
 add_library(libgltf STATIC
     Loader.cpp
     vk/Model.cpp
-    vk/Pipeline.hpp
-    vk/Shader.hpp
+    vk/Pipeline.cpp
+    vk/Shader.cpp
     vk/Device.hpp
 )
 
