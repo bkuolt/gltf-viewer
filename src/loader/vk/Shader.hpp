@@ -64,6 +64,8 @@ std::vector<uint32_t> compileGLSLtoSPIRV(const std::string& source, EShLanguage 
     return spirv;
 }
 
+/* ---------------------------------------------------------------------- */
+
 
 VkDescriptorSet createDescriptorSet() {
     return {};  // TODO

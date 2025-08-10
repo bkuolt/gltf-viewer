@@ -40,16 +40,7 @@ struct GLTFModelGPU
     std::vector<VkDescriptorSet> descriptorSets;
 };
 
-
 // ------------------------------------
-
-VkBuffer createIndexBuffer() {
-    return {};  // TODO
-}
-
-VkBuffer createVertexBuffer() {
-    return {};  // TODO
-}
 
 VkCommandBuffer createCommandBuffer() {
     return {};  // TODO
