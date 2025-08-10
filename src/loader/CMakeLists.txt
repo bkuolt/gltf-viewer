@@ -4,6 +4,7 @@ add_library(libgltf STATIC
     vk/Pipeline.cpp
     vk/Shader.cpp
     vk/Device.hpp
+    vk/Buffer.hpp
 )
 
 find_package(Vulkan REQUIRED)

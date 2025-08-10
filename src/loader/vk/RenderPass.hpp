@@ -1,9 +1,9 @@
+#ifndef BGL_VK_RENDER_PASS_HPP
+#define BGL_VK_RENDER_PASS_HPP
+
 #include <vulkan/vulkan.hpp>
 
-
-VkRenderPass createRenderPass(vk::Device& device, vk::Format swapChainImageFormat) {
-// Minimaler Vulkan RenderPass Beispiel-Code
-
+VkRenderPass CreateRenderPass(vk::Device& device, vk::Format swapChainImageFormat) {
     VkAttachmentDescription colorAttachment{};
     colorAttachment.format = swapChainImageFormat; // z.B. VK_FORMAT_B8G8R8A8_SRGB
     colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -47,3 +47,5 @@ VkRenderPass createRenderPass(vk::Device& device, vk::Format swapChainImageForma
 
     return renderPass;
 }
+
+#endif  // BGL_VK_RENDER_PASS_HPP

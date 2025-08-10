@@ -19,9 +19,6 @@ struct Vertex {
     float pos[3];
     float color[3];
 };
-
-
-int createBufferExample() {
     // Beispiel-Vertex-Daten
     std::array<Vertex, 3> vertices = {{
         {{0.0f, -0.5f, 0.0f}, {1.f, 0.f, 0.f}},
@@ -29,6 +26,10 @@ int createBufferExample() {
         {{-0.5f, 0.5f, 0.0f}, {0.f, 0.f, 1.f}},
     }};
     
+
+
+int createBufferExample() {
+
     vk::Device device = /* dein Vulkan Device */;
     vk::PhysicalDevice physicalDevice = /* dein Physical Device */;
 
@@ -51,34 +52,39 @@ int createBufferExample() {
     bufferInfo.size = bufferSize;
     bufferInfo.usage = vk::BufferUsageFlagBits::eVertexBuffer;
     bufferInfo.sharingMode = vk::SharingMode::eExclusive;
-
     vk::Buffer vertexBuffer = device.createBuffer(bufferInfo);
+
+
+
 
     // 2. Speicherbedarf abfragen
     vk::MemoryRequirements memRequirements = device.getBufferMemoryRequirements(vertexBuffer);
-
     // 3. Memory Type finden
     uint32_t memoryTypeIndex = findMemoryType(
         memRequirements.memoryTypeBits,
         vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
 
+
     // 4. Speicher allokieren
     vk::MemoryAllocateInfo allocInfo{};
     allocInfo.allocationSize = memRequirements.size;
     allocInfo.memoryTypeIndex = memoryTypeIndex;
-
     vk::DeviceMemory vertexBufferMemory = device.allocateMemory(allocInfo);
+
 
     // 5. Buffer und Speicher verbinden
     device.bindBufferMemory(vertexBuffer, vertexBufferMemory, 0);
+
 
     // 6. Daten in Buffer kopieren (map, memcpy, unmap)
     void* data = device.mapMemory(vertexBufferMemory, 0, bufferSize);
     std::memcpy(data, vertices.data(), (size_t)bufferSize);
     device.unmapMemory(vertexBufferMemory);
 
+    
     // vertexBuffer kannst du jetzt beim Rendern binden:
     // vkCmdBindVertexBuffers(commandBuffer, 0, 1, &vertexBuffer, offsets);
+
 
     // --- Clean up (später, wenn Buffer nicht mehr gebraucht wird) ---
     // device.destroyBuffer(vertexBuffer);
