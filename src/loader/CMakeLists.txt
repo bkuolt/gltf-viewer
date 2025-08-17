@@ -7,6 +7,10 @@ add_library(libgltf STATIC
     vk/Buffer.hpp
 )
 
+# sdplog
+find_package(spdlog REQUIRED)
+target_link_libraries(libgltf PRIVATE spdlog::spdlog)
+
 find_package(Vulkan REQUIRED)
 find_package(glslang REQUIRED)
 

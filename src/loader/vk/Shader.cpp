@@ -56,7 +56,21 @@ std::vector<uint32_t> CompileGLSLtoSPIRV(const std::string& source, EShLanguage 
 /* ---------------------------------------------------------------------- */
 
 VkDescriptorSet createDescriptorSet() {
-    return {};  // TODO
+    // 4. Descriptor Set Layout erstellen (wie vorher gezeigt)
+    vk::DescriptorSetLayoutBinding uboBinding{};
+    uboBinding.binding = 0;
+    uboBinding.descriptorType = vk::DescriptorType::eUniformBuffer;
+    uboBinding.descriptorCount = 1;
+    uboBinding.stageFlags = vk::ShaderStageFlagBits::eVertex;
+
+    vk::DescriptorSetLayoutCreateInfo layoutInfo{};
+    layoutInfo.bindingCount = 1;
+    layoutInfo.pBindings = &uboBinding;
+
+    vk::UniqueDescriptorSetLayout descriptorSetLayout = device->createDescriptorSetLayoutUnique(layoutInfo);
+    std::cout << "Descriptor Set Layout created\n";
+
+    return descriptorSetLayout.get(); //!?
 }
 
 
