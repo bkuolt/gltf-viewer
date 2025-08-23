@@ -3,7 +3,7 @@ add_library(libgltf STATIC
     vk/Model.cpp
     vk/Pipeline.cpp
     vk/Shader.cpp
-    vk/Device.hpp
+    vk/Context.hpp
     vk/Buffer.hpp
 )
 
