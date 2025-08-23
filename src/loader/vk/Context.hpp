@@ -8,13 +8,12 @@ using log = spdlog;
 namespace
 {
 
-    // --- Callback Funktion für Validation Layer ---
-    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+    VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
         VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
         VkDebugUtilsMessageTypeFlagsEXT messageType,
         const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-        void* pUserData) {
-
+        void* pUserData)
+    {
         std::cerr << "Validation Layer: " << pCallbackData->pMessage << std::endl;
         return VK_FALSE;
     }
@@ -149,6 +148,10 @@ class Context {
             _graphicsQueueFamilyIndex = findGraphicsQueueFamily(_physicalDevice);
             _device = createLogicalDevice(_graphicsQueueFamilyIndex);
         }
+
+        // TODO: getPhysicalDevice()
+        // TODO: getDevice()
+        // TODO: getInstance()
 
     private:
         vk::UniqueInstance _instance;
