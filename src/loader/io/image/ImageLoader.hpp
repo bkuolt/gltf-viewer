@@ -8,10 +8,17 @@ namespace bgl::io {
 
 using Url = std::string;
 
+// RGBA8
+struct Image {
+    uint32_t width = 0;
+    uint32_t height = 0;
+    std::vector<uint8_t> pixels;
+};
+
 class ImageLoader {
  public:
-    virtual vk::UniqueImage load(const std::filesystem::path& path) = 0;
-    virtual vk::UniqueImage load(const std::vector<std::byte> data) = 0;
+    virtual Image load(const std::filesystem::path& path) = 0;
+    virtual Image load(const std::vector<std::byte> data) = 0;
 };
 
 vk::UniqueImage LoadImage(const Url& url);

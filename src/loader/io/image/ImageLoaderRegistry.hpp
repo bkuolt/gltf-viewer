@@ -18,6 +18,8 @@ class ImageLoaderRegistry {
     void unregisterLoader(const std::unique_ptr<ImageLoader>& loader);
 
  private:
+   ImageLoaderRegistry();
+
     std::map<std::unique_ptr<ImageLoader>, std::initializer_list<std::string>> _loaders;
 };
 

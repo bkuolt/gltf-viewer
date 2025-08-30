@@ -4,6 +4,11 @@ using log = spdlog;
 
 namespace bgl::io {
 
+ImageLoaderRegistry::ImageLoaderRegistry() {
+
+    // TODO: register png
+    // TODO: register jpg
+}
 
 ImageLoaderRegistry& ImageLoaderRegistry::instance() {
     static ImageLoaderRegistry registry;
