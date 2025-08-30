@@ -1,5 +1,6 @@
 #include <vulkan/vulkan.hpp>
 
+namespace bgl {
 
 uint32_t findMemoryType(const vk::PhysicalDevice& physDev,
                         uint32_t typeFilter,
@@ -18,75 +19,61 @@ uint32_t findMemoryType(const vk::PhysicalDevice& physDev,
 }
 
 
-
 class Image {
  public:
+ // TODO: add context
     Image(vk::Device device, vk::PhysicalDevice physDevice, uint32_t width, uint32_t height, vk::Format format)
         : _device(device), _format(format), _width(width), _height(height), _format(format)
     {
-        auto image = createImage(device, width, height, format);
-
-        auto imageMemory = allocateMemory(image, device, physDevice);
-        device.bindImageMemory(image, imageMemory, 0);
+        _image = createImage(device, width, height, format);
+        _memory = allocateMemory(_image, device, physDevice);
+        device.bindImageMemory(_image, _memory, 0);
     }
 
-    // Hauptfunktion: lädt RGBA8-Pixel in DEIN bestehendes Image (mipLevels=1)
-    void upload(vk::PhysicalDevice phys, vk::Device dev,
-                            vk::Queue queue, uint32_t queueFamilyIndex,
-                            vk::Image image, uint32_t width, uint32_t height,
-                            const std::vector<uint8_t>& pixels)
+    void upload(vk::Queue queue, uint32_t queueFamilyIndex,
+                uint32_t width, uint32_t height, const std::vector<uint8_t>& pixels)
     {
         const vk::DeviceSize imageSize = static_cast<vk::DeviceSize>(width) * height * 4;
 
-        // 1) Staging-Buffer + Memory
-        vk::BufferCreateInfo bci{};
-        bci.size = imageSize;
-        bci.usage = vk::BufferUsageFlagBits::eTransferSrc;
-        bci.sharingMode = vk::SharingMode::eExclusive;
-        vk::Buffer staging = dev.createBuffer(bci);
+        vk::Buffer staging;            // TODO
+        vk::DeviceMemory stagingMem;   // TODO
+        _device.bindBufferMemory(staging, stagingMem, 0);
 
-        auto req = dev.getBufferMemoryRequirements(staging);
-        uint32_t typeIdx = findMemoryType(phys, req.memoryTypeBits,
-            vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
-        vk::DeviceMemory stagingMem = dev.allocateMemory({req.size, typeIdx});
-        dev.bindBufferMemory(staging, stagingMem, 0);
-
-        // Daten rein
-        void* p = dev.mapMemory(stagingMem, 0, imageSize);
+        // copy data to staging buffer
+        void* p = _device.mapMemory(stagingMem, 0, imageSize);
         std::memcpy(p, pixels.data(), static_cast<size_t>(imageSize));
-        dev.unmapMemory(stagingMem);
+        _device.unmapMemory(stagingMem);
 
         // 2) Command Pool temporär
         vk::CommandPoolCreateInfo pci{};
         pci.flags = vk::CommandPoolCreateFlagBits::eTransient | vk::CommandPoolCreateFlagBits::eResetCommandBuffer;
         pci.queueFamilyIndex = queueFamilyIndex;
         vk::CommandPool pool = dev.createCommandPool(pci);
-
         // 3) Commands: Transitions + Copy
         vk::CommandBuffer cmd = beginOneTime(dev, pool);
 
         // UNDEFINED -> TRANSFER_DST_OPTIMAL (falls dein Image schon in UNDEFINED ist)
-        transition(cmd, image, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, 1);
+        transition(cmd, _image, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, 1);
+
 
         // Copy Buffer -> Image
-        vk::BufferImageCopy region{};
+        vk::BufferImageCopy region {};
         region.bufferOffset = 0;
-        region.bufferRowLength = 0;      // tightly packed
-        region.bufferImageHeight = 0;    // tightly packed
+        region.bufferRowLength = 0;
+        region.bufferImageHeight = 0;
         region.imageSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
         region.imageSubresource.mipLevel = 0;
         region.imageSubresource.baseArrayLayer = 0;
         region.imageSubresource.layerCount = 1;
-        region.imageOffset = {0,0,0};
-        region.imageExtent = {width, height, 1};
+        region.imageOffset = vk::Extent3D {0,0,0};
+        region.imageExtent = vk::Extent3D {width, height, 1};
 
-        cmd.copyBufferToImage(staging, image,
-                            vk::ImageLayout::eTransferDstOptimal,
-                            1, &region);
+        cmd.copyBufferToImage(staging, _image,
+                              vk::ImageLayout::eTransferDstOptimal,
+                              1, &region);
 
         // TRANSFER_DST_OPTIMAL -> SHADER_READ_ONLY_OPTIMAL
-        transition(cmd, image, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, 1);
-
+        transition(cmd, _image, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, 1);
         endOneTime(dev, queue, pool, cmd);
 
         // 4) Aufräumen
@@ -141,6 +128,10 @@ class Image {
     uint32_t _width;
     uint32_t _height;
     vk::Format _format;
+    vk::DeviceMemory _memory;
+
+
+    vk::Image _image{nullptr};
 };
 
 // *******************************************************************************
@@ -188,3 +179,6 @@ inline void transition(vk::CommandBuffer cmd, vk::Image img,
     }
     cmd.pipelineBarrier(src, dst, {}, nullptr, nullptr, b);
 }
+
+
+} // namespace bgl

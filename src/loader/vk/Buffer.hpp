@@ -36,4 +36,30 @@ class IndexBuffer : public Buffer {
         {}
 };
 
+
+
+class StagingBuffer : public Buffer {
+    public:
+#if 0    
+        StagingBuffer(vk::Device device, vk::PhysicalDevice physicalDevice, vk::DeviceSize size)
+            : Buffer(device, physicalDevice,
+                     vk::BufferUsageFlagBits::eTransferSrc,
+                     size)
+        {}
+
+
+        // 1) Staging-Buffer + Memory
+        vk::BufferCreateInfo bci{};
+        bci.size = imageSize;
+        bci.usage = vk::BufferUsageFlagBits::eTransferSrc;
+        bci.sharingMode = vk::SharingMode::eExclusive;
+        vk::Buffer staging = dev.createBuffer(bci);
+
+        auto req = dev.getBufferMemoryRequirements(staging);
+        uint32_t typeIdx = findMemoryType(phys, req.memoryTypeBits,
+            vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
+        vk::DeviceMemory stagingMem = dev.allocateMemory({req.size, typeIdx});
+    #endif 
+    
+}
 #endif // BGL_VK_BUFFER_HPP
