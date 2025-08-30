@@ -20,6 +20,7 @@ class Buffer {
         vk::Buffer _buffer;
         vk::DeviceMemory _memory;
         const vk::Device& _device;
+        const vk::PhysicalDevice& _physicalDevice;
 };
 
 class VertexBuffer : public Buffer {
@@ -35,7 +36,6 @@ class IndexBuffer : public Buffer {
             : Buffer(device, physicalDevice, vk::BufferUsageFlagBits::eIndexBuffer, size)
         {}
 };
-
 
 
 class StagingBuffer : public Buffer {
@@ -61,5 +61,6 @@ class StagingBuffer : public Buffer {
         vk::DeviceMemory stagingMem = dev.allocateMemory({req.size, typeIdx});
     #endif 
     
-}
+};
+
 #endif // BGL_VK_BUFFER_HPP

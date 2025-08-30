@@ -12,8 +12,10 @@ find_package(glm REQUIRED)
 add_executable(gltf_viewer src/main.cpp)
 target_compile_features(gltf_viewer PRIVATE cxx_std_17)
 
-add_subdirectory(src/loader)  # cmake for libgltf 
 
-target_link_libraries(gltf_viewer PRIVATE libgltf nlohmann_json::nlohmann_json )
+add_subdirectory(src/io)
+add_subdirectory(src/vk)
+
+target_link_libraries(gltf_viewer PRIVATE io vk)
 target_include_directories(gltf_viewer PRIVATE)
 

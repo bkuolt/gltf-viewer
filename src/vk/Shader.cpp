@@ -3,6 +3,7 @@
 #include <vulkan/vulkan.hpp>
 #include <glslang/Public/ShaderLang.h>
 #include <glslang/SPIRV/GlslangToSpv.h>
+#include <iostream>
 
 vk::ShaderModule CreateShaderModule(
     const vk::Device& device,
@@ -55,7 +56,7 @@ std::vector<uint32_t> CompileGLSLtoSPIRV(const std::string& source, EShLanguage 
 
 /* ---------------------------------------------------------------------- */
 
-VkDescriptorSet createDescriptorSet() {
+VkDescriptorSet createDescriptorSet(vk::Device device) {
     // 4. Descriptor Set Layout erstellen (wie vorher gezeigt)
     vk::DescriptorSetLayoutBinding uboBinding{};
     uboBinding.binding = 0;
@@ -67,10 +68,10 @@ VkDescriptorSet createDescriptorSet() {
     layoutInfo.bindingCount = 1;
     layoutInfo.pBindings = &uboBinding;
 
-    vk::UniqueDescriptorSetLayout descriptorSetLayout = device->createDescriptorSetLayoutUnique(layoutInfo);
+    vk::UniqueDescriptorSetLayout descriptorSetLayout = device.createDescriptorSetLayoutUnique(layoutInfo);
     std::cout << "Descriptor Set Layout created\n";
 
-    return descriptorSetLayout.get(); //!?
+    return {};  // TODO: descriptorSetLayout.get() !?
 }
 
 

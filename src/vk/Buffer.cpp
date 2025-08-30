@@ -10,7 +10,7 @@ Buffer::Buffer(const vk::Device& device,
         const vk::PhysicalDevice& physicalDevice,
         vk::BufferUsageFlags usage,
         vk::DeviceSize bufferSize)
-    : _device(device)
+    : _device(device), _physicalDevice(physicalDevice)
 {
     vk::BufferCreateInfo bufferInfo{};
     bufferInfo.size = bufferSize;
@@ -18,7 +18,7 @@ Buffer::Buffer(const vk::Device& device,
     bufferInfo.sharingMode = vk::SharingMode::eExclusive;
     _buffer = device.createBuffer(bufferInfo);
 
-    auto memory = getDeviceMemory(device, _buffer);
+    auto memory = getDeviceMemory({} /* TODO: memory flags */  );
     device.bindBufferMemory(_buffer, memory, 0);
 }
 

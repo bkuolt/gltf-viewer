@@ -1,0 +1,26 @@
+[requires]
+
+glm/1.0.1
+
+# GLTF Loader
+tinygltf/2.9.0
+libjpeg/9e
+libpng/1.6.40
+
+# Vulkan
+vulkan-loader/1.3.268.0
+glslang/1.4.313.0
+
+spdlog/1.11.0
+
+zlib/1.2.13
+zstd/1.5.2
+
+# TODO: resolve nlohmann_json/*
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout

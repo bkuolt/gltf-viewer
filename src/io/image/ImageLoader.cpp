@@ -21,7 +21,8 @@ vk::UniqueImage LoadImage(const std::filesystem::path& path) {
 
 vk::UniqueImage LoadImage(const std::vector<std::byte>& data, const std::string& extension) {
     auto loader { ImageLoaderRegistry::instance().loader(extension) };
-    return loader->load(data);
+    const auto image = loader->load(data);
+    return {};  // TODO: refactor so that a bgl::Image is returned and uploaded to the gpu
 }
 
 vk::UniqueImage LoadImage(const Url& url) {
