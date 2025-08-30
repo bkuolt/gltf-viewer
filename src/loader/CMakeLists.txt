@@ -5,7 +5,10 @@ add_library(libgltf STATIC
     vk/Shader.cpp
     vk/Context.hpp
     vk/Buffer.hpp
+    vk/Image.hpp
 )
+
+set (CMAKE_CXX_STANDARD 20)
 
 # sdplog
 find_package(spdlog REQUIRED)
