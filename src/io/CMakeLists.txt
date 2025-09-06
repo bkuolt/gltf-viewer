@@ -10,6 +10,7 @@ target_include_directories(io
     PUBLIC
         ImageLoader.hpp
         ImageLoaderRegistry.hpp
+        gltf/
 )
 
 # sdplog
@@ -41,6 +42,7 @@ target_link_libraries(io PRIVATE
     nlohmann_json::nlohmann_json
     glslang::glslang
     fmt::fmt
+    TinyGLTF::TinyGLTF
     # TODO: fix libpng::libpng
     # TODO: fix libjpeg::libjpeg
     # TODO: fix zlib::zlib

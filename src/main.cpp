@@ -10,6 +10,11 @@ int main(int argc, char** argv) {
     }
 
     const auto path = argv[1];
-    bgl::gltf::LoadModel(path);
+    bgl::gltf::Loader loader;
+    auto model = loader.ĺoad(path);
+
+    // TODO: get images
+    // TODO: get meshes
+
     return EXIT_SUCCESS;
 }
