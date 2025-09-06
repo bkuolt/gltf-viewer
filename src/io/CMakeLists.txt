@@ -22,6 +22,10 @@ find_package(Vulkan REQUIRED)
 target_include_directories(io PRIVATE ${Vulkan_INCLUDE_DIRS})
 target_link_libraries(io PRIVATE ${Vulkan_LIBRARIES})
 
+
+find_package(TinyGLTF REQUIRED)
+
+
 # GLTF
 find_package(nlohmann_json REQUIRED)
 target_include_directories(io PRIVATE
@@ -30,9 +34,13 @@ target_include_directories(io PRIVATE
     ${TinyGLTF_INCLUDE_DIRS}
 )
 
+#fmt
+find_package(fmt)
+
 target_link_libraries(io PRIVATE
     nlohmann_json::nlohmann_json
     glslang::glslang
+    fmt::fmt
     # TODO: fix libpng::libpng
     # TODO: fix libjpeg::libjpeg
     # TODO: fix zlib::zlib

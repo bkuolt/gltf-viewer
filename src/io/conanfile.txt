@@ -16,6 +16,7 @@ spdlog/1.11.0
 zlib/1.2.13
 zstd/1.5.2
 
+fmt/11.2.0
 # TODO: resolve nlohmann_json/*
 
 [generators]

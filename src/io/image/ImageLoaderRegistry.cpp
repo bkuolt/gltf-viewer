@@ -1,5 +1,6 @@
 #include "ImageLoaderRegistry.hpp"
 #include <iostream>
+#include <fmt/format.h>
 
 namespace bgl::io {
 
@@ -18,7 +19,8 @@ std::unique_ptr<ImageLoader> ImageLoaderRegistry::loader(const std::string& exte
 {
     for (const auto& [loader, extensions] : _loaders) {
         if (std::find(extensions.begin(), extensions.end(), extension) != extensions.end()) {
-            return std::make_unique<ImageLoader>(*loader);
+            //TODO
+            //return std::make_unique<ImageLoader>(*loader);
         }
     }
     return nullptr;
@@ -27,14 +29,14 @@ std::unique_ptr<ImageLoader> ImageLoaderRegistry::loader(const std::string& exte
 void ImageLoaderRegistry::registerLoader(const std::initializer_list<std::string>& extensions, std::unique_ptr<ImageLoader> loader)
 {
     _loaders.insert(std::make_pair(std::move(loader), extensions));
-    std::cout << "Registered image loader for extensions: {}" << fmt::join(extensions, ", ");
+   //std::cout << "Registered image loader for extensions: {}" << fmt::join(extensions, ", ");
 }
 
 void ImageLoaderRegistry::unregisterLoader(const std::unique_ptr<ImageLoader>& loader)
 {
     const auto extensions = _loaders.at(loader);
     _loaders.erase(loader);
-    std::cout << "Unregistered image loader for extensions: {}" << fmt::join(extensions, ", ");
+    //std::cout << "Unregistered image loader for extensions: {}" << fmt::join(extensions, ", ");
 }
 
 void ImageLoaderRegistry::unregisterLoader(const std::initializer_list<std::string>& extensions)

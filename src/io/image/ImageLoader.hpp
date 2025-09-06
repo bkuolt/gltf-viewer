@@ -17,6 +17,8 @@ struct Image {
 
 class ImageLoader {
  public:
+    ImageLoader(const std::filesystem::path& path) {}
+
     virtual Image load(const std::filesystem::path& path) = 0;
     virtual Image load(const std::vector<std::byte> data) = 0;
 };

@@ -1,4 +1,6 @@
-#include "loader/Loader.hpp"
+#include "io/image/ImageLoader.hpp"
+#include "io/gltf/Loader.hpp"
+
 #include <iostream>
 
 int main(int argc, char** argv) {
