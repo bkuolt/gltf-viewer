@@ -181,4 +181,15 @@ inline void transition(vk::CommandBuffer cmd, vk::Image img,
 }
 
 
+// TODO
+class Texture {
+    Texture(Image image, vk::Sampler sampler)
+        : _image(image), _sampler(sampler)
+    {}
+
+    private:
+    Image _image;
+    vk::Sampler _sampler;
+}
+
 } // namespace bgl

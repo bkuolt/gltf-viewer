@@ -1,16 +1,19 @@
-set (CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_STANDARD 23)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+set (CMAKE_CXX_EXTENSIONS ON)
 
 add_library(io STATIC
     image/ImageLoader.cpp
     image/ImageLoaderRegistry.cpp
     gltf/Loader.cpp
+    gltf/Model.cpp
 )
 
 target_include_directories(io
     PUBLIC
         ImageLoader.hpp
         ImageLoaderRegistry.hpp
-        gltf/
+        
 )
 
 # sdplog
